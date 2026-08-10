@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AMULET KOREA | Admin</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>AMULET KOREA</h1>
+  <p>Admin удирдлагын хэсэг</p>
+</header>
+
+<main class="container">
+
+  <!-- LOGIN -->
+  <section id="login-section" class="form-box">
+
+    <h2>🔐 Admin нэвтрэх</h2>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="И-мэйл"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Нууц үг"
+    >
+
+    <button onclick="adminLogin()">
+      Нэвтрэх
+    </button>
+
+    <p id="login-message"></p>
+
+  </section>
+
+
+  <!-- ADMIN PANEL -->
+  <section id="admin-panel" style="display:none;">
+
+    <div class="form-box">
+
+      <h2>➕ Шинэ бараа нэмэх</h2>
+
+      <input
+        type="text"
+        id="product-name"
+        placeholder="Барааны нэр"
+      >
+
+      <select id="product-category">
+        <option value="">Ангилал сонгох</option>
+        <option value="Гоо сайхан">Гоо сайхан</option>
+        <option value="Гутал">Гутал</option>
+        <option value="Хувцас">Хувцас</option>
+        <option value="Хүүхдийн бараа">Хүүхдийн бараа</option>
+        <option value="Бусад">Бусад</option>
+      </select>
+
+      <input
+        type="number"
+        id="price-won"
+        placeholder="Үнэ ₩ (вон)"
+      >
+
+      <input
+        type="number"
+        id="exchange-rate"
+        value="2.5"
+        step="0.01"
+        placeholder="Вон → төгрөг ханш"
+      >
+
+      <input
+        type="number"
+        id="stock"
+        value="1"
+        placeholder="Үлдэгдэл"
+      >
+
+      <textarea
+        id="description"
+        rows="5"
+        placeholder="Барааны тайлбар"
+      ></textarea>
+
+      <label>
+        Барааны зураг
+      </label>
+
+      <input
+        type="file"
+        id="product-image"
+        accept="image/*"
+      >
+
+      <button onclick="addProduct()">
+        Бараа нэмэх
+      </button>
+
+      <p id="product-message"></p>
+
+    </div>
+
+
+    <div class="form-box">
+
+      <h2>📦 Миний бараанууд</h2>
+
+      <div id="admin-products">
+        Бараанууд ачаалж байна...
+      </div>
+
+    </div>
+
+
+    <div class="form-box">
+
+      <button onclick="adminLogout()">
+        Гарах
+      </button>
+
+      <br><br>
+
+      <a href="index.html">
+        ← Дэлгүүр рүү буцах
+      </a>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer>
+  <p>© 2026 AMULET KOREA</p>
+  <p>100% оригинал бүтээгдэхүүн 🇰🇷</p>
+</footer>
+
+
+<script src="config.js"></script>
+<script src="admin.js"></script>
+
+</body>
+</html>
