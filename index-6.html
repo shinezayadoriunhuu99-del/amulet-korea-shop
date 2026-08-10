@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AMULET KOREA SHOP</title>
+  <meta name="description" content="Солонгосоос бүх төрлийн бараа захиалга" />
+  <style>
+    :root{
+      --green:#176b45;
+      --green2:#23875b;
+      --mint:#eaf6ef;
+      --cream:#fffdf7;
+      --ink:#203028;
+      --muted:#6d7b73;
+      --line:#dce8e0;
+      --white:#fff;
+      --shadow:0 10px 30px rgba(24,73,52,.09);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,"Noto Sans",sans-serif;background:#f7fbf8;color:var(--ink)}
+    a{text-decoration:none;color:inherit}
+    button,input,select,textarea{font:inherit}
+    .top{background:var(--green);color:white;text-align:center;padding:8px 14px;font-size:14px}
+    header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    .nav{max-width:1180px;margin:auto;display:flex;align-items:center;gap:18px;padding:14px 18px}
+    .brand{font-weight:900;color:var(--green);font-size:22px;white-space:nowrap}
+    .brand small{display:block;font-size:10px;letter-spacing:2px;color:var(--muted)}
+    .search{flex:1;display:flex;background:var(--mint);border-radius:999px;padding:9px 14px}
+    .search input{border:0;outline:0;background:transparent;width:100%}
+    .actions{display:flex;gap:10px;align-items:center}
+    .pill{border:1px solid var(--line);background:white;border-radius:999px;padding:9px 13px;cursor:pointer}
+    .cartcount{background:var(--green);color:white;border-radius:99px;padding:2px 7px;font-size:12px}
+    main{max-width:1180px;margin:auto;padding:18px}
+    .hero{background:linear-gradient(135deg,#0f5f3b,#31966a);border-radius:28px;color:white;padding:42px;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;overflow:hidden;box-shadow:var(--shadow)}
+    .hero h1{font-size:44px;line-height:1.05;margin:0 0 12px}
+    .hero p{font-size:18px;max-width:600px;opacity:.95}
+    .hero .cta{display:inline-block;margin-top:14px;background:white;color:var(--green);border:0;border-radius:999px;padding:13px 20px;font-weight:800;cursor:pointer}
+    .hero-card{justify-self:end;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:24px;padding:22px;width:100%;max-width:340px}
+    .hero-card b{font-size:24px}
+    .section-title{display:flex;justify-content:space-between;align-items:end;margin:32px 0 14px}
+    .section-title h2{margin:0;font-size:26px}
+    .section-title span{color:var(--muted);font-size:14px}
+    .cats{display:grid;grid-template-columns:repeat(8,1fr);gap:12px}
+    .cat{background:white;border:1px solid var(--line);border-radius:18px;padding:18px 10px;text-align:center;cursor:pointer;box-shadow:0 4px 14px rgba(22,72,49,.04)}
+    .cat .emoji{font-size:28px;display:block;margin-bottom:7px}
+    .products{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .product{background:white;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 5px 18px rgba(22,72,49,.05)}
+    .photo{height:210px;background:linear-gradient(135deg,#eef8f1,#dcefe4);display:flex;align-items:center;justify-content:center;font-size:62px;position:relative}
+    .badge{position:absolute;top:12px;left:12px;background:var(--green);color:white;border-radius:999px;padding:6px 9px;font-size:12px}
+    .pbody{padding:15px}
+    .pbody h3{margin:0 0 8px;font-size:17px}
+    .price{font-size:20px;font-weight:900;color:var(--green)}
+    .meta{font-size:13px;color:var(--muted);margin:7px 0 12px}
+    .add{width:100%;border:0;background:var(--green);color:white;padding:11px;border-radius:12px;font-weight:800;cursor:pointer}
+    .benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:30px 0}
+    .benefit{background:var(--mint);padding:18px;border-radius:18px}
+    .benefit b{display:block;margin-bottom:5px}
+    .panel{background:white;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+    footer{margin-top:35px;background:#103d2b;color:#e8f2ec;padding:30px 18px}
+    footer .inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+    .drawer{position:fixed;inset:0;display:none;z-index:40;background:rgba(0,0,0,.38)}
+    .drawer.open{display:block}
+    .sheet{position:absolute;right:0;top:0;height:100%;width:min(460px,100%);background:#fff;padding:20px;overflow:auto}
+    .sheet-head{display:flex;justify-content:space-between;align-items:center}
+    .close{border:0;background:#edf5f0;border-radius:50%;width:38px;height:38px;cursor:pointer}
+    .cart-item{display:grid;grid-template-columns:58px 1fr auto;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+    .mini{width:58px;height:58px;background:var(--mint);border-radius:12px;display:grid;place-items:center;font-size:28px}
+    .total{display:flex;justify-content:space-between;font-size:21px;font-weight:900;padding:18px 0}
+    .checkout{width:100%;border:0;background:var(--green);color:#fff;border-radius:14px;padding:14px;font-weight:900;cursor:pointer}
+    .form{display:grid;gap:12px}
+    .form input,.form select,.form textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;outline:none}
+    .paybox{border:1px dashed #9fc6af;background:#f3fbf6;border-radius:16px;padding:16px}
+    .qr{width:180px;height:180px;margin:10px auto;background:
+      linear-gradient(90deg,#173b2c 10%,transparent 10% 20%,#173b2c 20% 30%,transparent 30% 40%,#173b2c 40% 50%,transparent 50% 60%,#173b2c 60% 70%,transparent 70% 80%,#173b2c 80% 90%,transparent 90%),
+      linear-gradient(#173b2c 10%,transparent 10% 20%,#173b2c 20% 30%,transparent 30% 40%,#173b2c 40% 50%,transparent 50% 60%,#173b2c 60% 70%,transparent 70% 80%,#173b2c 80% 90%,transparent 90%);
+      background-size:36px 36px;border:12px solid white;box-shadow:0 0 0 1px var(--line)}
+    .notice{font-size:13px;color:var(--muted)}
+    .status{display:flex;gap:8px;overflow:auto;padding-bottom:6px}
+    .step{min-width:150px;background:#f5f8f6;border:1px solid var(--line);border-radius:14px;padding:12px}
+    .step.active{background:var(--mint);border-color:#9ac6ab}
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr;padding:28px}
+      .hero h1{font-size:34px}
+      .hero-card{justify-self:start;margin-top:20px}
+      .cats{grid-template-columns:repeat(4,1fr)}
+      .products{grid-template-columns:repeat(2,1fr)}
+      .benefits{grid-template-columns:repeat(2,1fr)}
+      .actions .hide-mobile{display:none}
+    }
+    @media(max-width:560px){
+      .nav{gap:8px;padding:10px 12px}
+      .brand{font-size:17px}
+      .search{display:none}
+      main{padding:12px}
+      .hero{border-radius:20px;padding:22px}
+      .hero h1{font-size:29px}
+      .cats{grid-template-columns:repeat(4,1fr);gap:8px}
+      .cat{padding:12px 5px;font-size:12px}
+      .products{gap:10px}
+      .photo{height:150px}
+      .pbody{padding:11px}
+      .benefits{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="top">🇰🇷 Солонгосоос бүх төрлийн бараа • 100% оригинал • Монгол руу хүргэлт</div>
+  <header>
+    <div class="nav">
+      <a class="brand" href="#">AMULET KOREA<small>SHOP</small></a>
+      <div class="search"><input id="search" placeholder="Бараа, брэнд хайх..." oninput="renderProducts()"></div>
+      <div class="actions">
+        <button class="pill hide-mobile" onclick="showOrders()">Захиалга</button>
+        <button class="pill" onclick="openCart()">Сагс <span id="cartCount" class="cartcount">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1>Солонгосоос хүссэн бараагаа нэг дороос</h1>
+        <p>Гутал, хувцас, гоо сайхан, хүүхдийн бараа, гэр ахуй, аксессуар болон бусад бүх төрлийн барааг захиалаарай.</p>
+        <button class="cta" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Бараа үзэх</button>
+      </div>
+      <div class="hero-card">
+        <div>💚 <b>AMULETKOREA.MN</b></div>
+        <p>Монгол ₮ үнэ • Сагс • QPay төлбөр • Захиалгын төлөв</p>
+      </div>
+    </section>
+
+    <div class="section-title"><h2>Ангилал</h2><span>Бүх төрлийн бараа</span></div>
+    <section class="cats" id="cats"></section>
+
+    <div class="section-title" id="products"><h2>Онцлох бараа</h2><span id="resultInfo"></span></div>
+    <section class="products" id="productGrid"></section>
+
+    <section class="benefits">
+      <div class="benefit"><b>✅ 100% оригинал</b><span>Солонгосоос шууд</span></div>
+      <div class="benefit"><b>💳 QPay</b><span>QR төлбөрийн хэсэг</span></div>
+      <div class="benefit"><b>📦 Карго</b><span>Монгол руу хүргэлт</span></div>
+      <div class="benefit"><b>🔎 Захиалга хянах</b><span>Төлөвөө харах</span></div>
+    </section>
+
+    <section class="panel">
+      <h2>Захиалгын төлөв</h2>
+      <div class="status">
+        <div class="step active">1. Төлбөр хүлээгдэж байна</div>
+        <div class="step">2. Төлбөр төлөгдсөн</div>
+        <div class="step">3. Солонгосоос захиалсан</div>
+        <div class="step">4. Каргонд гарсан</div>
+        <div class="step">5. Хүргэгдсэн</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="inner">
+      <div><b>AMULET KOREA SHOP</b><br><small>amuletkorea.mn</small></div>
+      <div>Солонгос → Монгол захиалга</div>
+      <div>© 2026 AMULET KOREA</div>
+    </div>
+  </footer>
+
+  <div class="drawer" id="cartDrawer" onclick="if(event.target===this) closeCart()">
+    <div class="sheet">
+      <div class="sheet-head"><h2>Таны сагс</h2><button class="close" onclick="closeCart()">✕</button></div>
+      <div id="cartItems"></div>
+      <div class="total"><span>Нийт</span><span id="totalPrice">0₮</span></div>
+      <button class="checkout" onclick="startCheckout()">Захиалах</button>
+      <div id="checkoutArea"></div>
+    </div>
+  </div>
+
+<script>
+const categories = [
+  ["👟","Гутал"],["👗","Хувцас"],["🧴","Гоо сайхан"],["🍼","Хүүхэд"],
+  ["👜","Цүнх"],["🏠","Гэр ахуй"],["🎧","Электроник"],["🔥","SALE"]
+];
+const products = [
+  {id:1,name:"Nike Running Shoes",cat:"Гутал",price:189000,emoji:"👟",meta:"Размер: 230–290",badge:"NEW"},
+  {id:2,name:"Sulwhasoo Skincare Set",cat:"Гоо сайхан",price:299000,emoji:"🧴",meta:"100% оригинал",badge:"POPULAR"},
+  {id:3,name:"Korea Daily Jacket",cat:"Хувцас",price:159000,emoji:"🧥",meta:"S / M / L",badge:"SALE"},
+  {id:4,name:"Baby Care Set",cat:"Хүүхэд",price:89000,emoji:"🍼",meta:"Солонгос бүтээгдэхүүн",badge:"NEW"},
+  {id:5,name:"Mini Cross Bag",cat:"Цүнх",price:99000,emoji:"👜",meta:"3 өнгө",badge:"BEST"},
+  {id:6,name:"Home Organizer",cat:"Гэр ахуй",price:49000,emoji:"🏠",meta:"Олон зориулалттай",badge:"NEW"},
+  {id:7,name:"Wireless Earbuds",cat:"Электроник",price:129000,emoji:"🎧",meta:"Bluetooth",badge:"HOT"},
+  {id:8,name:"Outlet Special",cat:"SALE",price:79000,emoji:"🔥",meta:"Хязгаартай тоо",badge:"-50%"}
+];
+let filterCat = "Бүгд";
+let cart = JSON.parse(localStorage.getItem("amuletCart")||"[]");
+
+function money(n){return n.toLocaleString("mn-MN")+"₮"}
+function renderCats(){
+  const el=document.getElementById("cats");
+  el.innerHTML=categories.map(([e,n])=>`<div class="cat" onclick="setCat('${n}')"><span class="emoji">${e}</span>${n}</div>`).join("");
+}
+function setCat(c){filterCat=c; renderProducts(); document.getElementById('products').scrollIntoView({behavior:'smooth'});}
+function renderProducts(){
+  const q=(document.getElementById("search")?.value||"").toLowerCase();
+  let arr=products.filter(p=>(filterCat==="Бүгд"||p.cat===filterCat) && (p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q)));
+  document.getElementById("resultInfo").textContent = filterCat==="Бүгд" ? `${arr.length} бараа` : `${filterCat} • ${arr.length} бараа`;
+  document.getElementById("productGrid").innerHTML=arr.map(p=>`
+    <article class="product">
+      <div class="photo"><span class="badge">${p.badge}</span>${p.emoji}</div>
+      <div class="pbody">
+        <h3>${p.name}</h3>
+        <div class="price">${money(p.price)}</div>
+        <div class="meta">${p.meta}</div>
+        <button class="add" onclick="addToCart(${p.id})">Сагсанд нэмэх</button>
+      </div>
+    </article>`).join("");
+}
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  const found=cart.find(x=>x.id===id);
+  if(found) found.qty++; else cart.push({...p,qty:1});
+  saveCart(); openCart();
+}
+function saveCart(){localStorage.setItem("amuletCart",JSON.stringify(cart)); document.getElementById("cartCount").textContent=cart.reduce((a,b)=>a+b.qty,0)}
+function openCart(){document.getElementById("cartDrawer").classList.add("open"); renderCart()}
+function closeCart(){document.getElementById("cartDrawer").classList.remove("open")}
+function renderCart(){
+  const el=document.getElementById("cartItems");
+  if(!cart.length){el.innerHTML="<p>Сагс хоосон байна.</p>";}
+  else el.innerHTML=cart.map(x=>`<div class="cart-item"><div class="mini">${x.emoji}</div><div><b>${x.name}</b><br><small>${money(x.price)} × ${x.qty}</small></div><button class="close" onclick="removeItem(${x.id})">−</button></div>`).join("");
+  const total=cart.reduce((s,x)=>s+x.price*x.qty,0);
+  document.getElementById("totalPrice").textContent=money(total);
+}
+function removeItem(id){cart=cart.filter(x=>x.id!==id);saveCart();renderCart()}
+function startCheckout(){
+  if(!cart.length){alert("Эхлээд бараа сагсанд нэмнэ үү.");return}
+  document.getElementById("checkoutArea").innerHTML=`
+    <hr style="border:0;border-top:1px solid var(--line);margin:20px 0">
+    <h3>Хүргэлтийн мэдээлэл</h3>
+    <div class="form">
+      <input id="cname" placeholder="Нэр">
+      <input id="cphone" placeholder="Утасны дугаар">
+      <textarea id="caddr" placeholder="Хүргэлтийн хаяг"></textarea>
+      <select id="delivery"><option>Улаанбаатар хүргэлт</option><option>Орон нутаг / карго</option></select>
+      <button class="checkout" onclick="showPayment()">Төлбөр үргэлжлүүлэх</button>
+    </div>`;
+}
+function showPayment(){
+  const n=document.getElementById("cname").value.trim(), p=document.getElementById("cphone").value.trim();
+  if(!n||!p){alert("Нэр, утсаа оруулна уу.");return}
+  document.getElementById("checkoutArea").innerHTML=`
+    <div class="paybox">
+      <h3>QPay төлбөр</h3>
+      <div class="qr" aria-label="Demo QR"></div>
+      <p style="text-align:center"><b>${document.getElementById("totalPrice").textContent}</b></p>
+      <button class="checkout" onclick="demoPaid()">Төлбөр төлсөн (DEMO)</button>
+      <p class="notice">Энэ нь демо QR. Бодит QPay ажиллуулахын тулд QPay merchant API эрх, backend серверийн холболт шаардлагатай.</p>
+    </div>`;
+}
+function demoPaid(){
+  localStorage.setItem("amuletLastOrder", JSON.stringify({date:new Date().toISOString(),items:cart,total:cart.reduce((s,x)=>s+x.price*x.qty,0),status:"Төлбөр төлөгдсөн"}));
+  cart=[];saveCart();renderCart();
+  document.getElementById("checkoutArea").innerHTML="<div class='paybox'><h3>✅ Захиалга баталгаажлаа</h3><p>Төлөв: <b>Төлбөр төлөгдсөн</b></p><p class='notice'>Демо захиалга амжилттай хадгалагдлаа.</p></div>";
+}
+function showOrders(){
+  const o=JSON.parse(localStorage.getItem("amuletLastOrder")||"null");
+  alert(o ? `Сүүлийн захиалга\nТөлөв: ${o.status}\nНийт: ${money(o.total)}` : "Одоогоор захиалга алга.");
+}
+renderCats();renderProducts();saveCart();
+</script>
+</body>
+</html>

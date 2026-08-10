@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AMULET KOREA SHOP</title>
+<style>
+:root{--g:#176b45;--g2:#23875b;--mint:#eef8f2;--ink:#233128;--muted:#728078;--line:#dce8e0;--white:#fff;--bg:#f7fbf8}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans",sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit}.top{background:var(--g);color:white;text-align:center;padding:8px}
+header{background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.nav{max-width:1180px;margin:auto;padding:12px 16px;display:flex;gap:12px;align-items:center}
+.brand{font-weight:900;color:var(--g);font-size:20px}.brand small{display:block;font-size:10px;letter-spacing:2px;color:var(--muted)}
+.search{flex:1;background:var(--mint);border-radius:999px;padding:10px 14px}.search input{width:100%;border:0;outline:0;background:transparent}
+.btn{border:0;border-radius:12px;padding:10px 14px;cursor:pointer}.btn.primary{background:var(--g);color:white}.btn.ghost{background:white;border:1px solid var(--line)}
+main{max-width:1180px;margin:auto;padding:18px}.hero{background:linear-gradient(135deg,#125a39,#30966a);color:white;border-radius:26px;padding:34px}
+.hero h1{margin:0 0 10px;font-size:38px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.section{margin-top:28px}
+.card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden}.photo{height:180px;background:var(--mint);display:grid;place-items:center;font-size:55px}
+.body{padding:14px}.price{color:var(--g);font-size:20px;font-weight:900}.muted{color:var(--muted);font-size:13px}.cats{display:flex;gap:8px;overflow:auto;padding-bottom:5px}.chip{white-space:nowrap}
+.drawer,.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;z-index:30}.drawer.open,.modal.open{display:block}
+.sheet{position:absolute;right:0;top:0;width:min(500px,100%);height:100%;background:white;padding:20px;overflow:auto}.center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,94%);background:white;border-radius:20px;padding:22px}
+.form{display:grid;gap:10px}.form input,.form select,.form textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px}.row{display:flex;gap:10px;align-items:center}.space{display:flex;justify-content:space-between;align-items:center}
+.admin{display:none}.admin.on{display:block}.dash{display:grid;grid-template-columns:220px 1fr;gap:18px}.sidebar{background:#103d2b;color:white;border-radius:18px;padding:14px;height:max-content}.sidebtn{width:100%;text-align:left;background:transparent;color:white;border:0;padding:11px;border-radius:10px;cursor:pointer}.sidebtn:hover{background:rgba(255,255,255,.1)}
+.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:16px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:var(--mint);border-radius:15px;padding:16px}.table{width:100%;border-collapse:collapse}.table th,.table td{border-bottom:1px solid var(--line);padding:10px;text-align:left;font-size:14px}
+footer{margin-top:35px;background:#103d2b;color:white;padding:25px;text-align:center}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.dash{grid-template-columns:1fr}.sidebar{display:flex;overflow:auto}.sidebtn{white-space:nowrap}.stats{grid-template-columns:1fr}.search{display:none}}
+</style>
+</head>
+<body>
+<div class="top">🇰🇷 Солонгосоос бүх төрлийн бараа • AMULETKOREA.MN</div>
+<header><div class="nav">
+  <div class="brand">AMULET KOREA<small>SHOP</small></div>
+  <div class="search"><input id="search" placeholder="Бараа хайх..." oninput="renderShop()"></div>
+  <button class="btn ghost" onclick="openLogin()">Нэвтрэх</button>
+  <button class="btn primary" onclick="openCart()">Сагс <span id="count">0</span></button>
+</div></header>
+
+<main id="shopView">
+<section class="hero"><h1>Бүх төрлийн барааг Солонгосоос</h1><p>Та өөрийн веб шопын бараа, үнэ, ангилал, захиалгаа админ хэсгээс өөрөө удирдана.</p></section>
+<section class="section"><h2>Ангилал</h2><div class="cats" id="cats"></div></section>
+<section class="section"><div class="space"><h2>Бараа</h2><span class="muted" id="result"></span></div><div class="grid" id="grid"></div></section>
+</main>
+
+<main class="admin" id="adminView">
+<div class="dash">
+  <aside class="sidebar">
+    <button class="sidebtn" onclick="showAdmin('dashboard')">📊 Хяналтын самбар</button>
+    <button class="sidebtn" onclick="showAdmin('products')">📦 Бараа</button>
+    <button class="sidebtn" onclick="showAdmin('orders')">🧾 Захиалга</button>
+    <button class="sidebtn" onclick="logout()">↩ Гарах</button>
+  </aside>
+  <section>
+    <div id="dashboardPanel" class="panel"></div>
+    <div id="productsPanel" class="panel" style="display:none"></div>
+    <div id="ordersPanel" class="panel" style="display:none"></div>
+  </section>
+</div>
+</main>
+
+<footer>© 2026 AMULET KOREA SHOP • amuletkorea.mn</footer>
+
+<div class="drawer" id="cartDrawer" onclick="if(event.target===this)closeCart()">
+<div class="sheet"><div class="space"><h2>Сагс</h2><button class="btn ghost" onclick="closeCart()">✕</button></div><div id="cartItems"></div><div class="space"><b>Нийт</b><b id="total">0₮</b></div><br><button class="btn primary" style="width:100%" onclick="checkout()">Захиалах</button><div id="checkoutBox"></div></div>
+</div>
+
+<div class="modal" id="loginModal" onclick="if(event.target===this)closeLogin()">
+<div class="center"><div class="space"><h2>Админ нэвтрэх</h2><button class="btn ghost" onclick="closeLogin()">✕</button></div>
+<div class="form"><input id="email" placeholder="И-мэйл" value="admin@amuletkorea.mn"><input id="pass" type="password" placeholder="Нууц үг"><button class="btn primary" onclick="login()">Нэвтрэх</button><p class="muted">DEMO нууц үг: <b>amulet2026</b>. Бодит веб дээр нууц үгийг серверт аюулгүй хадгална.</p></div></div>
+</div>
+
+<script>
+const defaultProducts=[
+{id:1,name:"Nike Running Shoes",cat:"Гутал",price:189000,emoji:"👟",stock:5},
+{id:2,name:"Sulwhasoo Set",cat:"Гоо сайхан",price:299000,emoji:"🧴",stock:3},
+{id:3,name:"Korea Jacket",cat:"Хувцас",price:159000,emoji:"🧥",stock:6},
+{id:4,name:"Baby Care",cat:"Хүүхэд",price:89000,emoji:"🍼",stock:10}
+];
+let products=JSON.parse(localStorage.getItem("ak_products")||"null")||defaultProducts;
+let cart=JSON.parse(localStorage.getItem("ak_cart")||"[]");
+let orders=JSON.parse(localStorage.getItem("ak_orders")||"[]");
+let currentCat="Бүгд";
+const cats=["Бүгд","Гутал","Хувцас","Гоо сайхан","Хүүхэд","Цүнх","Гэр ахуй","Электроник","SALE"];
+const money=n=>Number(n).toLocaleString("mn-MN")+"₮";
+function save(){localStorage.setItem("ak_products",JSON.stringify(products));localStorage.setItem("ak_cart",JSON.stringify(cart));localStorage.setItem("ak_orders",JSON.stringify(orders));document.getElementById("count").textContent=cart.reduce((s,x)=>s+x.qty,0)}
+function renderCats(){document.getElementById("cats").innerHTML=cats.map(c=>`<button class="btn ${c===currentCat?'primary':'ghost'} chip" onclick="currentCat='${c}';renderCats();renderShop()">${c}</button>`).join("")}
+function renderShop(){let q=(document.getElementById("search")?.value||"").toLowerCase();let a=products.filter(p=>(currentCat==="Бүгд"||p.cat===currentCat)&&p.name.toLowerCase().includes(q));document.getElementById("result").textContent=a.length+" бараа";document.getElementById("grid").innerHTML=a.map(p=>`<div class="card"><div class="photo">${p.emoji||"🛍️"}</div><div class="body"><b>${p.name}</b><div class="price">${money(p.price)}</div><div class="muted">${p.cat} • Үлдэгдэл ${p.stock}</div><br><button class="btn primary" style="width:100%" onclick="addCart(${p.id})">Сагсанд нэмэх</button></div></div>`).join("")}
+function addCart(id){let p=products.find(x=>x.id===id);let x=cart.find(x=>x.id===id);if(x)x.qty++;else cart.push({...p,qty:1});save();openCart()}
+function openCart(){document.getElementById("cartDrawer").classList.add("open");renderCart()} function closeCart(){document.getElementById("cartDrawer").classList.remove("open")}
+function renderCart(){document.getElementById("cartItems").innerHTML=cart.length?cart.map(x=>`<div class="space" style="padding:10px 0;border-bottom:1px solid var(--line)"><div>${x.emoji} <b>${x.name}</b><br><span class="muted">${money(x.price)} × ${x.qty}</span></div><button class="btn ghost" onclick="cart=cart.filter(i=>i.id!==${x.id});save();renderCart()">−</button></div>`).join(""):"<p>Сагс хоосон.</p>";document.getElementById("total").textContent=money(cart.reduce((s,x)=>s+x.price*x.qty,0))}
+function checkout(){if(!cart.length)return alert("Сагс хоосон");document.getElementById("checkoutBox").innerHTML=`<hr><h3>Захиалгын мэдээлэл</h3><div class="form"><input id="cn" placeholder="Нэр"><input id="cp" placeholder="Утас"><textarea id="ca" placeholder="Хаяг"></textarea><select id="pay"><option>QPay</option><option>Банкны шилжүүлэг</option></select><button class="btn primary" onclick="placeOrder()">Захиалга батлах</button></div>`}
+function placeOrder(){let n=document.getElementById("cn").value.trim(),p=document.getElementById("cp").value.trim();if(!n||!p)return alert("Нэр, утас оруулна уу");orders.unshift({id:Date.now(),customer:n,phone:p,address:document.getElementById("ca").value,total:cart.reduce((s,x)=>s+x.price*x.qty,0),status:"Төлбөр хүлээгдэж байна",items:[...cart],date:new Date().toLocaleString()});cart=[];save();renderCart();document.getElementById("checkoutBox").innerHTML="<p><b>✅ Захиалга үүслээ.</b><br>Төлбөр: QPay DEMO</p>"}
+function openLogin(){document.getElementById("loginModal").classList.add("open")} function closeLogin(){document.getElementById("loginModal").classList.remove("open")}
+function login(){if(document.getElementById("email").value==="admin@amuletkorea.mn"&&document.getElementById("pass").value==="amulet2026"){sessionStorage.setItem("ak_admin","1");closeLogin();enterAdmin()}else alert("И-мэйл эсвэл нууц үг буруу")}
+function enterAdmin(){document.getElementById("shopView").style.display="none";document.getElementById("adminView").classList.add("on");renderDashboard();renderAdminProducts();renderOrders()}
+function logout(){sessionStorage.removeItem("ak_admin");document.getElementById("adminView").classList.remove("on");document.getElementById("shopView").style.display="block"}
+function showAdmin(x){["dashboard","products","orders"].forEach(k=>document.getElementById(k+"Panel").style.display=k===x?"block":"none");if(x==="dashboard")renderDashboard();if(x==="products")renderAdminProducts();if(x==="orders")renderOrders()}
+function renderDashboard(){document.getElementById("dashboardPanel").innerHTML=`<h2>Хяналтын самбар</h2><div class="stats"><div class="stat"><b>${products.length}</b><br><span class="muted">Нийт бараа</span></div><div class="stat"><b>${orders.length}</b><br><span class="muted">Нийт захиалга</span></div><div class="stat"><b>${money(orders.reduce((s,o)=>s+o.total,0))}</b><br><span class="muted">Захиалгын дүн</span></div></div>`}
+function renderAdminProducts(){document.getElementById("productsPanel").innerHTML=`<div class="space"><h2>Бараа удирдах</h2><button class="btn primary" onclick="addProductForm()">+ Бараа нэмэх</button></div><div id="addBox"></div><div style="overflow:auto"><table class="table"><tr><th>Нэр</th><th>Ангилал</th><th>Үнэ</th><th>Үлдэгдэл</th><th></th></tr>${products.map(p=>`<tr><td>${p.emoji||"🛍️"} ${p.name}</td><td>${p.cat}</td><td>${money(p.price)}</td><td>${p.stock}</td><td><button class="btn ghost" onclick="editProduct(${p.id})">Засах</button> <button class="btn ghost" onclick="deleteProduct(${p.id})">Устгах</button></td></tr>`).join("")}</table></div>`}
+function addProductForm(p=null){let box=document.getElementById("addBox");box.innerHTML=`<div class="panel" style="margin:12px 0;background:var(--mint)"><div class="form"><input id="pn" placeholder="Барааны нэр" value="${p?.name||""}"><select id="pc">${cats.filter(x=>x!=="Бүгд").map(c=>`<option ${p?.cat===c?"selected":""}>${c}</option>`).join("")}</select><input id="pp" type="number" placeholder="Үнэ ₮" value="${p?.price||""}"><input id="ps" type="number" placeholder="Үлдэгдэл" value="${p?.stock??""}"><input id="pe" placeholder="Emoji / тэмдэг" value="${p?.emoji||"🛍️"}"><button class="btn primary" onclick="saveProduct(${p?.id||0})">${p?"Хадгалах":"Нэмэх"}</button></div></div>`}
+function saveProduct(id){let data={name:pn.value.trim(),cat:pc.value,price:Number(pp.value),stock:Number(ps.value),emoji:pe.value||"🛍️"};if(!data.name||!data.price)return alert("Нэр, үнэ оруулна уу");if(id){let i=products.findIndex(x=>x.id===id);products[i]={...products[i],...data}}else products.unshift({id:Date.now(),...data});save();renderAdminProducts();renderShop()}
+function editProduct(id){addProductForm(products.find(x=>x.id===id))} function deleteProduct(id){if(confirm("Устгах уу?")){products=products.filter(x=>x.id!==id);save();renderAdminProducts();renderShop()}}
+function renderOrders(){document.getElementById("ordersPanel").innerHTML=`<h2>Захиалга</h2><div style="overflow:auto"><table class="table"><tr><th>#</th><th>Хэрэглэгч</th><th>Дүн</th><th>Төлөв</th></tr>${orders.map(o=>`<tr><td>${String(o.id).slice(-6)}</td><td>${o.customer}<br><span class="muted">${o.phone}</span></td><td>${money(o.total)}</td><td><select onchange="updateStatus(${o.id},this.value)">${["Төлбөр хүлээгдэж байна","Төлбөр төлөгдсөн","Солонгосоос захиалсан","Каргонд гарсан","Хүргэгдсэн"].map(s=>`<option ${s===o.status?"selected":""}>${s}</option>`).join("")}</select></td></tr>`).join("")}</table></div>`}
+function updateStatus(id,v){orders.find(x=>x.id===id).status=v;save()}
+renderCats();renderShop();save();if(sessionStorage.getItem("ak_admin")==="1")enterAdmin();
+</script>
+</body></html>
