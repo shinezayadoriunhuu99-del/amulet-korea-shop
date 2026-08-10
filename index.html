@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#7eae8c">
+
+  <title>AMULET KOREA</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body{
+      background:#f7fbf8;
+    }
+
+    main{
+      max-width:1200px;
+      margin:auto;
+    }
+
+    /* HERO */
+    .hero{
+      min-height:250px;
+      margin:18px 16px;
+      padding:34px 26px;
+      border-radius:28px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #a8d0b3 0%,
+          #86b895 45%,
+          #659977 100%
+        );
+
+      color:#fff;
+
+      box-shadow:
+        0 12px 32px rgba(76,120,88,.13);
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .hero-badge{
+      width:max-content;
+      padding:7px 12px;
+
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.3);
+
+      border-radius:999px;
+
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.6px;
+
+      margin-bottom:13px;
+    }
+
+    .hero h1{
+      margin:0;
+
+      font-size:36px;
+      line-height:1.08;
+      font-weight:900;
+
+      letter-spacing:-1px;
+    }
+
+    .hero p{
+      margin:13px 0 0;
+
+      max-width:620px;
+
+      font-size:16px;
+      line-height:1.6;
+
+      color:rgba(255,255,255,.96);
+    }
+
+    /* SEARCH */
+    .search-wrap{
+      padding:0 16px;
+    }
+
+    .search-box{
+      position:relative;
+    }
+
+    .search-icon{
+      position:absolute;
+
+      left:17px;
+      top:50%;
+
+      transform:translateY(-50%);
+
+      font-size:20px;
+    }
+
+    .search-box input{
+      width:100%;
+      height:58px;
+
+      padding:0 18px 0 50px;
+
+      border:1px solid #dce9df;
+      border-radius:18px;
+
+      background:#fff;
+
+      font-size:17px;
+
+      outline:none;
+
+      box-shadow:
+        0 5px 18px rgba(67,100,77,.05);
+    }
+
+    .search-box input:focus{
+      border-color:#83af90;
+    }
+
+    /* QUICK CARDS */
+    .quick-info{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+
+      gap:10px;
+
+      padding:15px 16px 5px;
+    }
+
+    .quick-card{
+      min-height:92px;
+
+      padding:15px 12px;
+
+      border:1px solid #deebe1;
+      border-radius:18px;
+
+      background:#fff;
+
+      box-shadow:
+        0 4px 15px rgba(70,100,80,.04);
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .quick-icon{
+      font-size:23px;
+      margin-bottom:8px;
+    }
+
+    .quick-card b{
+      font-size:14px;
+      color:#365743;
+    }
+
+    .quick-card span{
+      display:block;
+
+      margin-top:4px;
+
+      font-size:11px;
+      line-height:1.3;
+
+      color:#7c8d82;
+    }
+
+    /* TITLE */
+    .sectionTitle{
+      padding:25px 16px 11px;
+    }
+
+    .sectionTitle h2{
+      margin:0;
+
+      font-size:24px;
+      font-weight:900;
+
+      color:#263b2e;
+    }
+
+    .sectionTitle p{
+      margin:5px 0 0;
+
+      font-size:13px;
+      color:#7b8980;
+    }
+
+    /* CATEGORY SIZE */
+    .chips{
+      padding-top:16px;
+    }
+
+    .chip{
+      font-size:14px;
+      min-height:48px;
+    }
+
+    /* NAV */
+    nav{
+      grid-template-columns:repeat(3,1fr) !important;
+    }
+
+    nav button{
+      font-size:22px !important;
+      font-weight:700;
+    }
+
+    nav span{
+      font-size:12px !important;
+      font-weight:800;
+    }
+
+    /* CART */
+    .sheet{
+      padding:22px;
+    }
+
+    .sheetHead h2{
+      font-size:23px;
+    }
+
+    #orderForm input,
+    #orderForm textarea{
+      font-size:16px;
+      padding:15px;
+      margin-top:9px;
+    }
+
+    .primary{
+      min-height:52px;
+      font-size:16px;
+    }
+
+    /* TABLET */
+    @media(min-width:768px){
+
+      .hero{
+        min-height:320px;
+        padding:48px;
+        margin-top:24px;
+      }
+
+      .hero h1{
+        font-size:48px;
+      }
+
+      .hero p{
+        font-size:18px;
+      }
+
+      .quick-info{
+        gap:16px;
+      }
+
+      .quick-card{
+        min-height:120px;
+        padding:20px;
+      }
+
+      .quick-card b{
+        font-size:17px;
+      }
+
+      .quick-card span{
+        font-size:13px;
+      }
+    }
+
+    /* PC */
+    @media(min-width:1050px){
+
+      .hero{
+        margin-left:0;
+        margin-right:0;
+
+        min-height:360px;
+
+        padding:60px;
+
+        border-radius:32px;
+      }
+
+      .hero h1{
+        font-size:56px;
+      }
+
+      .search-wrap,
+      .quick-info,
+      .sectionTitle{
+        padding-left:0;
+        padding-right:0;
+      }
+
+      .search-box input{
+        height:62px;
+      }
+
+      .quick-info{
+        margin-top:8px;
+      }
+
+      .quick-card{
+        min-height:130px;
+      }
+
+      .sectionTitle h2{
+        font-size:28px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+<header>
+
+  <div class="brand">
+    AMULET <span>KOREA</span>
+  </div>
+
+  <button
+    id="cartBtn"
+    aria-label="Сагс"
+  >
+    🛒
+    <b id="cartCount">0</b>
+  </button>
+
+</header>
+
+
+<main>
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-badge">
+      🇰🇷 СОЛОНГОСООС ШУУД
+    </div>
+
+    <h1>
+      ТАНЫ ӨДӨР ТУТМЫН<br>
+      ОНЛАЙН ДЭЛГҮҮР
+    </h1>
+
+    <p>
+      Хүнс • Хувцас • Цахилгаан бараа •
+      Гоо сайхан • Хүүхдийн бараа
+    </p>
+
+  </section>
+
+
+  <!-- SEARCH -->
+
+  <section class="search-wrap">
+
+    <div class="search-box">
+
+      <span class="search-icon">
+        🔍
+      </span>
+
+      <input
+        id="search"
+        type="search"
+        placeholder="Бараа хайх..."
+        autocomplete="off"
+      >
+
+    </div>
+
+  </section>
+
+
+  <!-- CATEGORY -->
+
+  <section
+    id="categories"
+    class="chips"
+  ></section>
+
+
+  <!-- QUICK INFO -->
+
+  <section class="quick-info">
+
+    <div class="quick-card">
+
+      <div class="quick-icon">
+        ✨
+      </div>
+
+      <b>
+        Шинэ бараа
+      </b>
+
+      <span>
+        Шинээр нэмэгдсэн бүтээгдэхүүн
+      </span>
+
+    </div>
+
+
+    <div class="quick-card">
+
+      <div class="quick-icon">
+        🏷️
+      </div>
+
+      <b>
+        Онцгой үнэ
+      </b>
+
+      <span>
+        Хямдралтай бараанууд
+      </span>
+
+    </div>
+
+
+    <div class="quick-card">
+
+      <div class="quick-icon">
+        🇰🇷
+      </div>
+
+      <b>
+        Солонгосоос
+      </b>
+
+      <span>
+        Шууд захиалгын бараа
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- PRODUCTS -->
+
+  <section class="sectionTitle">
+
+    <div>
+
+      <h2>
+        Онцлох бараа
+      </h2>
+
+      <p>
+        Танд санал болгож буй бүтээгдэхүүн
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <section
+    id="products"
+    class="grid"
+  >
+
+    <p>
+      Бараа ачаалж байна...
+    </p>
+
+  </section>
+
+</main>
+
+
+<!-- MOBILE NAVIGATION -->
+
+<nav>
+
+  <button
+    onclick="
+      window.scrollTo({
+        top:0,
+        behavior:'smooth'
+      })
+    "
+  >
+
+    🏠
+
+    <span>
+      Нүүр
+    </span>
+
+  </button>
+
+
+  <button id="navCategories">
+
+    ▦
+
+    <span>
+      Ангилал
+    </span>
+
+  </button>
+
+
+  <button id="navCart">
+
+    🛒
+
+    <span>
+      Захиалга
+    </span>
+
+  </button>
+
+</nav>
+
+
+<!-- CART -->
+
+<div
+  id="drawer"
+  class="drawer hidden"
+>
+
+  <div class="sheet">
+
+    <div class="sheetHead">
+
+      <h2>
+        🛒 Таны захиалга
+      </h2>
+
+      <button
+        id="closeDrawer"
+        aria-label="Хаах"
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div id="cartItems">
+    </div>
+
+
+    <div class="total">
+
+      Нийт:
+
+      <b id="cartTotal">
+        0₮
+      </b>
+
+    </div>
+
+
+    <form id="orderForm">
+
+      <input
+        id="customerName"
+        type="text"
+        required
+        placeholder="Таны нэр"
+      >
+
+
+      <input
+        id="phone"
+        type="tel"
+        required
+        placeholder="Утасны дугаар"
+      >
+
+
+      <textarea
+        id="address"
+        placeholder="Хаяг / хүргэлтийн мэдээлэл"
+      ></textarea>
+
+
+      <button
+        class="primary"
+        type="submit"
+      >
+        Захиалга баталгаажуулах
+      </button>
+
+    </form>
+
+
+    <p id="orderMsg">
+    </p>
+
+  </div>
+
+</div>
+
+
+<script
+  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
